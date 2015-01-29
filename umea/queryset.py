@@ -1,5 +1,4 @@
 import ldap
-from ldap.controls import SimplePagedResultsControl
 from ldap.dn import dn2str, str2dn
 from .fields import LdapField
 from .search import Search, filterbuilder
@@ -94,7 +93,7 @@ class QuerySet:
 
     # TODO: use deepcopy of the self.model
     def _map_to_model(self, dn, entry):
-        # .attrlist() is specified, then map only those attrs
+        # if .attrlist() is specified map only those attrs
         # otherwise map all fields 
         if self._attrlist:
             fields = list(self._attrlist)
@@ -111,7 +110,6 @@ class QuerySet:
         model = self.model(dn, fetched=True, **model_dict)
         return model
 
-    # Not ideal: cleanup
     def _evaluate(self):
         self.results = self.db.search(self.search.construct())
         self._cached = True

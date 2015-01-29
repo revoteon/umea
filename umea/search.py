@@ -82,7 +82,7 @@ def filter_factory(attribute, value):
 # TODO: make this classmethod of F
 def filterbuilder(*args, **kwargs):
     """
-    Accpets args where each of them is F() object
+    Accepts args where each of them is F() object
     and/or kwargs keypair
     """
     filter_string = None
