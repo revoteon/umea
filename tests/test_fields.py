@@ -91,7 +91,6 @@ class LdapFieldTestCase(unittest.TestCase):
         self.assertEqual(len(self.field.modlist), 2) 
         self.assertEqual(self.field.modlist, [(ldap.MOD_ADD, 'apple'), (ldap.MOD_ADD, 'pear')]) 
 
-
     def test_delete(self):
         self.field.add('apple')
         self.field.add('pear')
@@ -110,3 +109,16 @@ class LdapFieldTestCase(unittest.TestCase):
         self.field.value = ['apple', 'pear', 'grape']
         self.assertEqual(self.field.value, list(['apple', 'pear', 'grape']))
         self.assertEqual(len(self.field.modlist), 0)
+
+    def test_repr(self):
+        self.assertEqual(repr(self.field), str([]))
+        self.field.add('apple')
+        self.assertEqual(repr(self.field), str(['apple']))
+
+    def test_cmp(self):
+        field1 = LdapField()
+        field2 = LdapField()
+        self.assertTrue(field2 > field1)
+        field3 = LdapField()
+        self.assertTrue(field3 > field2)
+
