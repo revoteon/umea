@@ -59,13 +59,16 @@ class QuerySet:
         pass
 
     def _get_single_entry(self, *args, **kwargs):
-        dn = kwargs.get('dn', None)
+        dn = kwargs.pop('dn', None)
         if dn:
             normalized_dn = lambda x: dn2str(str2dn(x))
             assert normalized_dn(dn).lower().endswith(normalized_dn(self.model.base).lower())
             self.search.scope = ldap.SCOPE_BASE
-            self.search.filter = filterbuilder(objectclass__ne=None)
             self.search.base = dn
+            if not args and not kwargs:
+                self.search.filter = filterbuilder(objectclass__ne=None)
+            else:
+                self.search.filter = filterbuilder(*args, **kwargs)
         else:
             self.search.filter = filterbuilder(*args, **kwargs)
 
