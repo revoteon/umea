@@ -47,10 +47,13 @@ class QuerySet:
     def exists(self, **kwargs):
         pass
 
-    def attributes(self, *args):
+    def attributes(self, *args, **kwargs):
         fetch_only = set(args)
         # pk should always be in attr list
         fetch_only.add(self.model.pk)
+        # if you want to get all default attrs and specified extras
+        if kwargs.get('include_defaults', False):
+            fetch_only.add('*')
         self.search.attrlist = [self.model.MODEL_TO_DB.get(attr, attr) for attr in fetch_only]
         self._attrlist = fetch_only
         return self
@@ -97,8 +100,8 @@ class QuerySet:
     # TODO: use deepcopy of the self.model
     def _map_to_model(self, dn, entry):
         # if .attrlist() is specified map only those attrs
-        # otherwise map all fields 
-        if self._attrlist:
+        # otherwise map all fields
+        if self._attrlist and '*' not in self._attrlist:
             fields = list(self._attrlist)
         else:
             fields = self.model._fields
