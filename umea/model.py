@@ -1,5 +1,6 @@
 import ldap
 import db
+from collections import OrderedDict
 from operator import itemgetter
 from fields import LdapField
 from queryset import QuerySet
@@ -62,11 +63,13 @@ class ModelMeta(type):
         if not parents:
             return super_new(cls, name, bases, attrs)
 
-        fields_dictionary = {}
+        fields_dictionary = dict()
 
         for field, val in attrs.items():
             if isinstance(val, LdapField):
                 fields_dictionary[field] = val
+
+        fields_dictionary = OrderedDict(sorted(fields_dictionary.items(), key=lambda i: i[1].order))
 
         # name of fields that is different for DB (only when field has a db_name param)
         MODEL_TO_DB = dict()
