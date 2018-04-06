@@ -1,6 +1,6 @@
 import re
 import copy
-import ldap
+import ldap3 as ldap
 from ldap.filter import escape_filter_chars
 
 EXTENDED_OPERATIONS_MAP = {

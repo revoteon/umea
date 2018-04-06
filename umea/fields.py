@@ -1,4 +1,4 @@
-import ldap
+import ldap3 as ldap
 
 
 class LdapField(object):
@@ -21,7 +21,7 @@ class LdapField(object):
     @value.setter
     def value(self, value):
         #if value is not iterable, make it one 
-        if not hasattr(value, '__iter__'):
+        if not isinstance(value, list):
             value = list([value])
         self._value = value
         self._clear_modlist()

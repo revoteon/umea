@@ -1,4 +1,4 @@
-import ldap
+import ldap3 as ldap
 
 class Database:
     # impose required parameters!

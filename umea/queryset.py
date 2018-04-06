@@ -1,5 +1,5 @@
-import ldap
-from ldap.dn import dn2str, str2dn
+import ldap3 as ldap
+from ldap3.utils.dn import dn2str, str2dn
 from .fields import LdapField
 from .search import Search, filterbuilder
 

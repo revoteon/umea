@@ -1,9 +1,9 @@
-import ldap
-import db
+import ldap3 as ldap
+import umea.db
 from collections import OrderedDict
 from operator import itemgetter
-from fields import LdapField
-from queryset import QuerySet
+from umea.fields import LdapField
+from umea.queryset import QuerySet
 
 # TODO: Restrict object creation without dn or pk
 # If model pk is not rdn, then the only way to create model instance should be 

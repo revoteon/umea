@@ -1,5 +1,5 @@
 import unittest
-import ldap
+import ldap3 as ldap
 from umea.fields import LdapField
 
 class LdapFieldTestCase(unittest.TestCase):
